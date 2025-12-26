@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/theme.dart';
 import '../../../main/presentation/screens/main_screen.dart';
-import 'register_screen.dart';
+import 'login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               // Title
               Text(
-                "Welcome back! Glad\nto see you, Again!",
+                "Hello! Register to get\nstarted",
                 style: GoogleFonts.urbanist(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -53,13 +54,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 40),
 
+              // Username Field
+              _buildTextField(hint: "Username"),
+              const SizedBox(height: 16),
+
               // Email Field
-              _buildTextField(hint: "Enter your email"),
+              _buildTextField(hint: "Email"),
               const SizedBox(height: 16),
 
               // Password Field
               _buildTextField(
-                hint: "Enter your password",
+                hint: "Password",
                 isPassword: true,
                 isVisible: _isPasswordVisible,
                 onVisibilityToggle: () {
@@ -68,28 +73,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   });
                 },
               ),
+              const SizedBox(height: 16),
 
-              const SizedBox(height: 12),
-              // Forgot Password
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Forgot Password?",
-                  style: GoogleFonts.urbanist(
-                    color: const Color(0xFF6A707C),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+              // Confirm Password Field
+              _buildTextField(
+                hint: "Confirm Password",
+                isPassword: true,
+                isVisible: _isConfirmPasswordVisible,
+                onVisibilityToggle: () {
+                  setState(() {
+                    _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                  });
+                },
               ),
 
               const SizedBox(height: 30),
-              // Login Button
+              // Register Button
               SizedBox(
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
-                     Navigator.pushAndRemoveUntil(
+                    // Navigate to MainScreen on success
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => const MainScreen()),
                       (route) => false,
@@ -104,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     elevation: 5,
                   ),
                   child: Text(
-                    "Login",
+                    "Register",
                     style: GoogleFonts.urbanist(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -114,14 +120,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 30),
-              // Or Login With Divider
+              // Or Register With Divider
               Row(
                 children: [
                   const Expanded(child: Divider(color: Color(0xFFE8ECF4), thickness: 1)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      "Or Login with",
+                      "Or Register with",
                       style: GoogleFonts.urbanist(
                         color: const Color(0xFF6A707C),
                         fontWeight: FontWeight.w600,
@@ -133,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 30),
-              // Social Buttons
+               // Social Buttons (using icons directly for now)
               Row(
                 children: [
                    Expanded(child: _buildSocialButton(icon: Icons.facebook, color: const Color(0xFF1877F2))),
@@ -147,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.white,
                       ),
                       child: Center(
-                        // Using network image for Google
+                         // Using network image for Google to ensure capability
                         child: Image.network(
                           'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png',
                           height: 24,
@@ -165,13 +171,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
 
+
               const SizedBox(height: 50),
-              // Register Link
+              // Login Link
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an account? ",
+                    "Already have an account? ",
                     style: GoogleFonts.urbanist(
                       color: const Color(0xFF1E232C),
                       fontWeight: FontWeight.w500,
@@ -181,13 +188,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                        MaterialPageRoute(builder: (context) => const LoginScreen()),
                       );
                     },
                     child: Text(
-                      "Register Now",
+                      "Login Now",
                       style: GoogleFonts.urbanist(
-                        color: const Color(0xFF35C2C1), // Teal Accent
+                        color: const Color(0xFF35C2C1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),

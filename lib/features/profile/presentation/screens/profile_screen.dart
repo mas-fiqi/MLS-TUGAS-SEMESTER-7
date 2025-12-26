@@ -12,6 +12,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false, // Prevent layout distortion when keyboard opens
       body: Stack(
+        fit: StackFit.expand,
         children: [
           // 1. Red Header (30% of screen)
           Container(

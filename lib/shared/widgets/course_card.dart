@@ -6,6 +6,7 @@ class CourseCard extends StatelessWidget {
   final String lecturerCode;
   final String initial;
   final double progress;
+  final String? imagePath;
 
   const CourseCard({
     super.key,
@@ -13,6 +14,7 @@ class CourseCard extends StatelessWidget {
     required this.lecturerCode,
     required this.initial,
     required this.progress,
+    this.imagePath,
   });
 
   @override
@@ -21,8 +23,9 @@ class CourseCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.white.withOpacity(0.6), // Glass
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -33,24 +36,44 @@ class CourseCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Course Icon/Initial
+          // Course Icon/Image
           Container(
-            width: 50,
-            height: 50,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               color: kPrimaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Center(
-              child: Text(
-                initial,
-                style: const TextStyle(
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+            child: imagePath != null 
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    imagePath!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Center(
+                        child: Text(
+                          initial,
+                          style: const TextStyle(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : Center(
+                  child: Text(
+                    initial,
+                    style: const TextStyle(
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
-              ),
-            ),
           ),
           const SizedBox(width: 16),
           

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Constants
-const Color kPrimaryColor = Color(0xFF8B0000);
+const Color kPrimaryColor = Color(0xFF9C27B0); // Soft Purple
+const Color kGradientStart = Color(0xFFF3E5F5); // Light Purple
+const Color kGradientEnd = Color(0xFFFFFFFF); // White
 const Color kAccentColor = Color(0xFF00C853);
 const Color kTextColor = Color(0xFF212121);
 const Color kBackgroundColor = Color(0xFFFFFFFF);
@@ -28,9 +31,11 @@ final ThemeData appTheme = ThemeData(
     secondary: kAccentColor,
     surface: kBackgroundColor,
   ),
-  textTheme: const TextTheme(
-    displayLarge: kHeadingStyle,
-    bodyLarge: kBodyStyle,
+  textTheme: GoogleFonts.interTextTheme(
+    const TextTheme(
+      displayLarge: kHeadingStyle,
+      bodyLarge: kBodyStyle,
+    ),
   ),
   useMaterial3: true,
 );

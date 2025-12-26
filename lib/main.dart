@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/theme/theme.dart';
-import 'features/authentication/presentation/screens/splash_screen.dart';
+import 'features/authentication/presentation/screens/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Learning Management System',
       theme: appTheme,
-      home: const SplashScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }

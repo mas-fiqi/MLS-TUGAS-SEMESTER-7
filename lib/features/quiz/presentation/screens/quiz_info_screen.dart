@@ -8,87 +8,123 @@ class QuizInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: const Text(
           "Quiz Review 1",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: kPrimaryColor,
-        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black87),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Silahkan kerjakan kuis ini untuk menguji pemahaman Anda mengenai materi Pertemuan 1-3. Pastikan koneksi internet stabil.",
-              style: TextStyle(fontSize: 16, color: Colors.black87),
+            // Hero Icon / Illustration
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: kPrimaryColor.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.quiz_rounded,
+                size: 60,
+                color: kPrimaryColor,
+              ),
             ),
             const SizedBox(height: 24),
             
-            // Info Container
+            // Description
+            const Text(
+              "Pengantar UI/UX",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: kTextColor),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              "Uji pemahaman Anda mengenai materi Pertemuan 1-3. Kerjakan dengan teliti.",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 15, color: Colors.grey, height: 1.5),
+            ),
+            const SizedBox(height: 32),
+
+            // Info Grid Cards
+            Row(
+              children: [
+                _buildInfoCard(Icons.timer_outlined, "15 Menit", "Durasi"),
+                const SizedBox(width: 16),
+                _buildInfoCard(Icons.list_alt_rounded, "15 Soal", "Total"),
+                const SizedBox(width: 16),
+                _buildInfoCard(Icons.star_outline_rounded, "Tertinggi", "Penilaian"),
+              ],
+            ),
+            
+            const SizedBox(height: 40),
+            
+            // History Section (Clean Look)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Riwayat Percobaan",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: kTextColor.withOpacity(0.8),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            
+            // Empty State or List
             Container(
-              padding: const EdgeInsets.all(16),
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[300]!),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.05),
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Column(
                 children: [
-                  _buildInfoRow("Batas Waktu", "15 Menit"),
-                  const Divider(),
-                  _buildInfoRow("Metode Penilaian", "Nilai Tertinggi"),
-                  const Divider(),
-                  _buildInfoRow("Jumlah Soal", "15 Soal"),
+                   const Icon(Icons.history_toggle_off, color: Colors.grey, size: 40),
+                   const SizedBox(height: 8),
+                   Text("Belum ada percobaan", style: TextStyle(color: Colors.grey[400])),
                 ],
               ),
             ),
             
-            const SizedBox(height: 32),
-            const Text(
-              "Percobaan yang sudah dilakukan",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
-            
-            // History Table
-            Table(
-              border: TableBorder.all(color: Colors.grey[300]!),
-              columnWidths: const {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(1),
-                2: FlexColumnWidth(1),
-              },
-              children: const [
-                TableRow(
-                  decoration: BoxDecoration(color: Color(0xFFF5F5F5)),
-                  children: [
-                    Padding(padding: EdgeInsets.all(8.0), child: Text("No", style: TextStyle(fontWeight: FontWeight.bold))),
-                    Padding(padding: EdgeInsets.all(8.0), child: Text("Status", style: TextStyle(fontWeight: FontWeight.bold))),
-                    Padding(padding: EdgeInsets.all(8.0), child: Text("Nilai", style: TextStyle(fontWeight: FontWeight.bold))),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    Padding(padding: EdgeInsets.all(8.0), child: Text("-")),
-                    Padding(padding: EdgeInsets.all(8.0), child: Text("-")),
-                    Padding(padding: EdgeInsets.all(8.0), child: Text("-")),
-                  ],
-                ),
-              ],
-            ),
-            
-            const SizedBox(height: 48),
-            
-            // Buttons
+            const SizedBox(height: 50),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+               color: Colors.black.withOpacity(0.05),
+               blurRadius: 20,
+               offset: const Offset(0, -5),
+            )
+          ]
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -98,52 +134,60 @@ class QuizInfoScreen extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kPrimaryColor,
-                  alignment: Alignment.center,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
                 child: const Text(
-                  "Ambil Kuis",
+                  "Mulai Kuis",
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: kPrimaryColor),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  "Kembali Ke Kelas",
-                  style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+            const SizedBox(height: 12),
+             TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Kembali", style: TextStyle(color: Colors.grey)),
+             )
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: const TextStyle(color: Colors.black54)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
-        ],
+  Widget _buildInfoCard(IconData icon, String value, String label) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey[200]!),
+          boxShadow: [
+             BoxShadow(
+               color: Colors.black.withOpacity(0.02),
+               blurRadius: 10,
+               offset: const Offset(0, 4),
+             )
+          ]
+        ),
+        child: Column(
+          children: [
+            Icon(icon, color: kPrimaryColor, size: 28),
+            const SizedBox(height: 12),
+            Text(
+              value,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: kTextColor),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+            ),
+          ],
+        ),
       ),
     );
   }
