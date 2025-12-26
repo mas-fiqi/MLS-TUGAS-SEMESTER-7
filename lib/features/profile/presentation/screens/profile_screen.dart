@@ -10,6 +10,7 @@ class ProfileScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false, // Prevent layout distortion when keyboard opens
       body: Stack(
         children: [
           // 1. Red Header (30% of screen)
@@ -18,16 +19,19 @@ class ProfileScreen extends StatelessWidget {
             width: double.infinity,
             color: kPrimaryColor,
             padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    const Expanded(
-                      child: Text(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.topCenter,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      const SizedBox(width: 8), // Small spacing
+                      const Text(
                         "Profil Saya",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -36,33 +40,33 @@ class ProfileScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      const SizedBox(width: 48), // Balance
+                    ],
+                  ),
+                  const SizedBox(height: 10), // Reduced spacing
+                  const CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.person, size: 50, color: kPrimaryColor),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Nama Mahasiswa",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(width: 48), // Balance for back button
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.person, size: 50, color: kPrimaryColor),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Nama Mahasiswa",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
                   ),
-                ),
-                const Text(
-                  "mahasiswa@learning.ac.id",
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
+                  const Text(
+                    "mahasiswa@learning.ac.id",
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 
@@ -176,6 +180,7 @@ class ProfileScreen extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
+              color: Colors.black, // Force black color
             ),
           ),
           const Divider(),

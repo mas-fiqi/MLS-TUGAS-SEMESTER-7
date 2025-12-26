@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/theme.dart';
+import 'quiz_result_screen.dart';
 import 'dart:async';
 
 class QuizScreen extends StatefulWidget {
@@ -181,15 +182,17 @@ class _QuizScreenState extends State<QuizScreen> {
 
                 ElevatedButton(
                   onPressed: () {
-                    if (_currentQuestionIndex < _totalQuestions - 1) {
+                    if (_currentQuestionIndex < 14) {
                       setState(() {
-                        _currentQuestionIndex++;
+                        _currentQuestionIndex++; // Manually advance question index
                         _selectedAnswerIndex = -1; // Reset for demo
                       });
                     } else {
-                      // Finish quiz
-                      Navigator.pop(context);
-                      Navigator.pop(context); // Go back to course detail
+                      // Submit Quiz
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const QuizResultScreen()),
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(

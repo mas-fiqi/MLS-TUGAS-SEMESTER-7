@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/theme.dart';
 import '../../../quiz/presentation/screens/quiz_info_screen.dart';
+import '../../../materials/presentation/screens/video_player_screen.dart';
+import '../../../materials/presentation/screens/document_viewer_screen.dart';
+import '../../../tasks/presentation/screens/task_detail_screen.dart';
 
 class CourseDetailScreen extends StatefulWidget {
   final String courseName;
@@ -59,22 +62,33 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
     final List<Map<String, dynamic>> meetings = [
       {
         "title": "Pertemuan 1: Pengantar",
-        "subMaterials": ["Kontrak Kuliah", "Definisi Dasar"],
+        "subMaterials": [
+          {"title": "Kontrak Kuliah", "type": "Document"},
+          {"title": "Definisi Dasar UI/UX", "type": "Video"},
+        ],
         "completed": true,
       },
       {
         "title": "Pertemuan 2: Konsep Dasar",
-        "subMaterials": ["Sejarah", "Perkembangan"],
+        "subMaterials": [
+          {"title": "Sejarah UI Design", "type": "Document"},
+          {"title": "Perkembangan Teknologi", "type": "Video"},
+        ],
         "completed": true,
       },
       {
         "title": "Pertemuan 3: Implementasi",
-        "subMaterials": ["Studi Kasus", "Latihan"],
+        "subMaterials": [
+          {"title": "Studi Kasus Aplikasi", "type": "Document"},
+          {"title": "Latihan Wireframing", "type": "Video"},
+        ],
         "completed": false,
       },
       {
         "title": "Pertemuan 4",
-        "subMaterials": ["Materi Lanjutan"],
+        "subMaterials": [
+          {"title": "Materi Lanjutan", "type": "Document"},
+        ],
         "completed": false,
       },
     ];
@@ -95,13 +109,30 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
               meeting['title'],
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            children: (meeting['subMaterials'] as List<String>).map((sub) {
+            children: (meeting['subMaterials'] as List<Map<String, String>>).map((sub) {
+              bool isVideo = sub['type'] == 'Video';
               return ListTile(
-                title: Text(sub),
-                leading: const Icon(Icons.description_outlined, color: Colors.grey),
+                title: Text(sub['title']!),
+                leading: Icon(
+                  isVideo ? Icons.play_circle_outline : Icons.description_outlined,
+                  color: isVideo ? Colors.redAccent : Colors.blueAccent,
+                ),
                 trailing: meeting['completed']
                     ? const Icon(Icons.check_circle, color: kAccentColor)
                     : const Icon(Icons.circle_outlined, color: Colors.grey),
+                onTap: () {
+                  if (isVideo) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const VideoPlayerScreen()),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const DocumentViewerScreen()),
+                    );
+                  }
+                },
               );
             }).toList(),
           ),
@@ -134,32 +165,70 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
         return Card(
           margin: const EdgeInsets.only(bottom: 12),
           elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: isQuiz ? Colors.purple.withOpacity(0.1) : Colors.orange.withOpacity(0.1),
-              child: Icon(
-                isQuiz ? Icons.quiz_outlined : Icons.assignment_outlined,
-                color: isQuiz ? Colors.purple : Colors.orange,
-              ),
-            ),
-            title: Text(
-              item['title']!,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              item['deadline']!,
-              style: const TextStyle(color: Colors.redAccent, fontSize: 12),
-            ),
-            trailing: const Icon(Icons.chevron_right),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12),
             onTap: () {
-              if (item['type'] == "Quiz") {
+              if (isQuiz) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const QuizInfoScreen()),
                 );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TaskDetailScreen()),
+                );
               }
             },
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  // Icon Box
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: isQuiz ? Colors.orange : Colors.blue,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      isQuiz ? Icons.quiz : Icons.assignment,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  // Text Content
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item['title']!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          item['deadline']!.replaceFirst('Deadline: ', 'Tenggat: '),
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Navigation Arrow
+                  const Icon(Icons.chevron_right, color: Colors.grey),
+                ],
+              ),
+            ),
           ),
         );
       },
