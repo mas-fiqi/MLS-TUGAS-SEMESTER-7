@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../core/theme/theme.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 
@@ -79,7 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: Colors.white,
                       border: Border.all(
-                        color: const Color(0xFF0EA5E9), // primary
+                        color: kPrimaryColor, // primary (was 0xFF0EA5E9, now purple)
                         width: 4, // border-4
                       ),
                       boxShadow: [
@@ -93,7 +94,7 @@ class WelcomeScreen extends StatelessWidget {
                     child: const Icon(
                       Icons.fingerprint, // SVG path d="..."
                       size: 48, // w-12 h-12 (12 * 4 = 48px)
-                      color: Color(0xFF0EA5E9),
+                      color: kPrimaryColor,
                     ),
                   ),
                   
@@ -132,7 +133,7 @@ class WelcomeScreen extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF1F2937), // bg-dark-button
+                        backgroundColor: kPrimaryColor, // bg-dark-button -> Primary Purple
                         foregroundColor: Colors.white,
                         elevation: 10, // shadow-lg
                         shadowColor: Colors.black.withOpacity(0.2),
@@ -166,10 +167,10 @@ class WelcomeScreen extends StatelessWidget {
                         );
                       },
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: const Color(0xFF111827), // text-gray-900
+                        foregroundColor: kPrimaryColor, // text-gray-900 -> Primary Purple
                         backgroundColor: Colors.transparent,
                         side: const BorderSide(
-                          color: Color(0xFF111827), // border-gray-900
+                          color: kPrimaryColor, // border-gray-900 -> Primary Purple
                           width: 2, // border-2
                         ),
                         shape: RoundedRectangleBorder(

@@ -96,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1E232C), // Dark Navy
+                    backgroundColor: kPrimaryColor, // Soft Purple
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -187,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       "Register Now",
                       style: GoogleFonts.urbanist(
-                        color: const Color(0xFF35C2C1), // Teal Accent
+                        color: kPrimaryColor, // Soft Purple
                         fontWeight: FontWeight.bold,
                       ),
                     ),
